@@ -38,3 +38,5 @@ yarn-error.log
 docker/mysql
 docker/nginx/log
 ### Docker ###
+
+token.md

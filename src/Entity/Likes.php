@@ -6,9 +6,10 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(normalizationContext={"groups"={"read"}})
  * @ORM\Entity()
  * @ApiFilter(SearchFilter::class, properties={
  *     "post.id": "exact",
@@ -22,22 +23,26 @@ class Likes
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="likes")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read"})
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="likes")
+     * @Groups({"read"})
      */
     private $post;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="likes")
+     * @Groups({"read"})
      */
     private $comment;
 

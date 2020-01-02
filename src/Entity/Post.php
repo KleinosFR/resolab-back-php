@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use \DateTime;
 
 /**
  * @ApiResource(
@@ -57,6 +58,7 @@ class Post
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="user", orphanRemoval=true)
+     * @Groups({"read"})
      */
     private $likes;
 
@@ -70,7 +72,7 @@ class Post
     {
         $this->display = true;
         $this->comments = new ArrayCollection();
-        $this->createdAt = new \DateTime();
+        $this->createdAt = new DateTime();
         $this->likes = new ArrayCollection();
     }
 
