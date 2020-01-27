@@ -14,7 +14,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read_user"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiFilter(SearchFilter::class, properties={
  *     "username": "ipartial"
@@ -28,18 +30,19 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"read", "read_like"})
+     * @Groups({"read_user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"read", "read_like"})
+     * @Groups({"read_user"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"read_user"})
      */
     private $roles = [];
 
@@ -56,58 +59,69 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read_user"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read_user"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=6, nullable=true)
      * @Assert\Choice(choices=USER::GENDERS, message="Choose a valid gender.")
+     * @Groups({"read_user"})
      */
     private $gender;
 
     /**
      * @ORM\Column(type="date", nullable=true, nullable=true)
+     * @Groups({"read_user"})
      */
     private $birthday;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
+     * @Groups({"read_user"})
      */
     private $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Story", mappedBy="user")
+     * @Groups({"read_user"})
      */
     private $stories;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
+     * @Groups({"read_user"})
      */
     private $comments;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Time", mappedBy="user")
+     * @Groups({"read_user"})
      */
     private $times;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="user", orphanRemoval=true)
+     * @Groups({"read_user"})
      */
     private $likes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ClassRoom", inversedBy="user")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ClassRoom", inversedBy="users")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"read_user"})
      */
     private $classRoom;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"read_user"})
      */
     private $isRestricted;
 
