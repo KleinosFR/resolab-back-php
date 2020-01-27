@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
@@ -20,6 +21,7 @@ class School
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read_user"})
      */
     private $name;
 
