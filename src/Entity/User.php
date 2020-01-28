@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiFilter(SearchFilter::class, properties={
- *     "username": "ipartial"
+ *     "username": "exact"
  * })
  */
 class User implements UserInterface
