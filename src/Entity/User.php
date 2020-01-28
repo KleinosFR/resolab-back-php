@@ -30,13 +30,13 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"read_user"})
+     * @Groups({"read_user", "read", "read_like"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"read_user"})
+     * @Groups({"read_user", "read", "read_like"})
      */
     private $username;
 
