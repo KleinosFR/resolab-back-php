@@ -115,7 +115,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ClassRoom", inversedBy="users")
      * @ORM\JoinColumn(nullable=true)
-     * @Groups({"read_user"})
+     * @Groups({"read_user", "read", "read_like"})
      */
     private $classRoom;
 

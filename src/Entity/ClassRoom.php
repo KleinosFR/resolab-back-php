@@ -18,12 +18,13 @@ class ClassRoom
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read_user", "read", "read_like"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read_user"})
+     * @Groups({"read_user", "read", "read_like"})
      */
     private $name;
 
