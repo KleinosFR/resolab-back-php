@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"read"}}
+ *     normalizationContext={"groups"={"read_user","read"}}
  * )
  * @ORM\Entity()
  */
