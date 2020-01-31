@@ -16,12 +16,13 @@ class School
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read_user", "read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read_user"})
+     * @Groups({"read_user", "read"})
      */
     private $name;
 
