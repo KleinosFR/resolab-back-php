@@ -47,13 +47,14 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var string password
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
+     * @Groups({"read_user"})
      */
     private $isActive;
 
@@ -213,7 +214,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function isActive(): bool
+    public function getIsActive(): bool
     {
         return $this->isActive;
     }
@@ -398,7 +399,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function isRestricted(): bool
+    public function getIsRestricted(): bool
     {
         return $this->isRestricted;
     }
