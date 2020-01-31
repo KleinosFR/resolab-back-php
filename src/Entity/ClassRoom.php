@@ -20,7 +20,7 @@ class ClassRoom
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"read"})
+     * @Groups({"read_user","read"})
      */
     private $id;
 
