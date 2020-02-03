@@ -54,6 +54,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
+     * @Groups({"read_user"})
      */
     private $isActive;
 

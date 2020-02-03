@@ -143,7 +143,7 @@ class Alert
 
     public function setModerator(User $moderator): self
     {
-        if (in_array('ROLE_MODERATOR', $moderator->getRoles())) {
+        if ((in_array('ROLE_MODERATOR', $moderator->getRoles())) || (in_array('ROLE_ADMIN', $moderator->getRoles()))) {
             $this->moderator = $moderator;
             $this->takenCare = true;
         }
