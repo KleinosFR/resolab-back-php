@@ -213,7 +213,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function isActive(): bool
+    public function getisActive(): bool
     {
         return $this->isActive;
     }
@@ -398,7 +398,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function isRestricted(): bool
+    public function getisRestricted(): bool
     {
         return $this->isRestricted;
     }
