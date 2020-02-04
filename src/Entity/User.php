@@ -83,19 +83,25 @@ class User implements UserInterface
     private $birthday;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", cascade={"remove"})
      * @Groups({"read_user"})
      */
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Story", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="user", cascade={"remove"})
+     * @Groups({"read_user"})
+     */
+    private $alerts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Story", mappedBy="user", cascade={"remove"})
      * @Groups({"read_user"})
      */
     private $stories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", cascade={"remove"})
      * @Groups({"read_user"})
      */
     private $comments;
@@ -107,7 +113,7 @@ class User implements UserInterface
     private $times;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="user", cascade={"remove"})
      * @Groups({"read_user"})
      */
     private $likes;
@@ -131,6 +137,7 @@ class User implements UserInterface
         $this->isRestricted = true;
         $this->username = $username;
         $this->posts = new ArrayCollection();
+        $this->alerts = new ArrayCollection();
         $this->stories = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->times = new ArrayCollection();
@@ -284,6 +291,14 @@ class User implements UserInterface
         $this->classRoom = $classRoom;
 
         return $this;
+    }
+
+    /**
+     * @return PersistentCollection|Post[]
+     */
+    public function getAlerts(): PersistentCollection
+    {
+        return $this->alerts;
     }
 
     /**

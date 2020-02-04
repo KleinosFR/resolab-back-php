@@ -36,7 +36,7 @@ class Alert
     private $takenCare;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="alerts")
      * @Groups({"read"})
      */
     private $user;
