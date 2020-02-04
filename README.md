@@ -1,8 +1,8 @@
-# Project 3 - Starter Kit - Symfony 4.4.*
+# Project 3 - Resolab - Symfony 4.4.*
 
 ![Wild Code School](https://wildcodeschool.fr/wp-content/uploads/2019/01/logo_pink_176x60.png)
 
-This starter kit is here to easily start a repository for your students.
+The API was made with the Symfony framework (v4.4.1) in which we use APIPlatform to generate the API and JWT for authentication.
 
 It's symfony website-skeleton project with some additional tools to validate code standards.
 
@@ -10,87 +10,41 @@ It's symfony website-skeleton project with some additional tools to validate cod
   
     * PHP_CodeSniffer to check PSR2 
     * PHPStan will check PHP recommendation
-     
-  If tests fail, the commit is canceled and a warning message is displayed to developper.
-
-* Travis CI, as Continuous Integration will be run when a branch with active pull request is updated on github. It will run :
-
-    * Tasks to check if vendor, .idea, env.local are not versionned,
-    * PHP_CodeSniffer to check PSR2,
-    * PHPStan will check PHP recommendation.
- 
-
-## Getting Started for trainers
-
-Before your students can code, you have some work to do !
-
-### Prerequisites
-
-Create a repository on Github in WildCodeSchool organization following this exemple :
-**ville-session-language-project** as **bordeaux-0219-php-servyy**
-
-### Get starter kit
-
-1. Clone this project
-2. Remove `.git` folder to remove history
-3. `git init`
-4. Link to your project repository you'll give to your students : `git remote add origin ...`
-5. Edit `.travis.yml` file to change default e-mails settings to get notification checking tasks end
-6. Remove trainers instructions
-5. `git add .`
-6. `git commit -m "Init project repository"`
-7. `git push -u origin master`
-
-### Check on Travis
-
-1. Go on [https://travis-ci.com](https://travis-ci.com).
-2. Sign up if you don't have account,
-3. Look for your project in search bar on the left,
-4. As soon as your repository have a `.travis.yml` in root folder, Travis should detect it and run test.
-
-> You can watch this screenshot to see basic configuration : ![basic config](http://images.innoveduc.fr/symfony4/travis-config.png)
-
-
-
-### Configure you repository - Settings options
-
-1. Add your students team as contributor .
-2. Disallow both on 'dev' and 'master' branches your students writing credentials. 
-3. Disallow merge available while one approbation is not submitted on PR.
-
-> You can watch this very tiny short video : (Loom : verrouillage branches GitHub)[https://www.loom.com/share/ad0c641d0b9447be9e40fa38a499953b]
 
 ## Getting Started for Projects
 
 ### Prerequisites
 
-1. Check composer is installed
-2. Check yarn & node are installed
+1.Check composer is installed 
+
+2.Check yarn & node are installed
 
 ### Install
 
-1. Clone this project
+1. Clone this project https://github.com/WildCodeSchool/biarritz_P3_resolab_backend_php
+
 2. Run `composer install`
 3. Run `yarn install`
+4. Create an .env file from .env.dist and put your personal information in it.
 
-### Working
+### Start the command:
 
-1. Run `php bin/console server:run` to launch your local php web server
-2. Run `yarn run dev --watch` to launch your local server for assets
+Create database:
+`> bin/console doctrine:create:database`
+Run doctrine migrations:
+`> bin/console doctrine:migrations:migrate`
+In dev environment, fixtures can be launched
+`> bin/console doctrine:fixture:load`
 
-### Testing
+The API needs to be authenticated. Security uses JWT (https://github.com/lexik/LexikJWTAuthenticationBundle)
 
-1. Run `./bin/phpcs` to launch PHP code sniffer
-2. Run `./bin/phpstan analyse src --level max` to launch PHPStan
-3. Run `./bin/phpmd src text phpmd.xml` to launch PHP Mess Detector
-3. Run `./bin/eslint assets/js` to launch ESLint JS linter
-3. Run `./bin/sass-lint -c sass-linter.yml` to launch Sass-lint SASS/CSS linter
+### To have a command line token, run:
 
-### Windows Users
+`> curl -X POST -H "Content-Type: application/json" http://<domain:port>/api/login_check -d '{"username": "<username>", "password": "<password>"}'`
+Example with fixtures:
+`> curl -X POST -H "Content-Type: application/json" http://<domain:port>/api/login_check -d '{"username": "student_0", "password": "antic"}'`
 
-If you develop on Windows, you should edit you git configuration to change your end of line rules with this command :
-
-`git config --global core.autocrlf true`
+The diagram of the API can be consulted at the address [http://<domain:port>/api/docs](http://<domain:port>/api/docs)
 
 ## Deployment
 
@@ -106,14 +60,33 @@ Add additional notes about how to deploy this on a live system
 * [PHPMD](http://phpmd.org)
 * [ESLint](https://eslint.org/)
 * [Sass-Lint](https://github.com/sasstools/sass-lint)
-* [Travis CI](https://github.com/marketplace/travis-ci)
+
+## Docker
+This project can also be installed with docker (nginx, php7.3, mariadb, phpmyadmin)
+
+To run the project with docker, you have to run once the command:
+`make init`
+Details of the command:
+- pull every containers
+- create folder for database
+- run every containers
+- install vendor
+- create database
+- run doctrine migrations
+- run doctrine fixtures
+- run yarn
+ 
+Otherwise, run `make up` in order to run the container.
+Run `make help` to see all commands available or open Makefile.
+Every commands are alias which run commands in a bash file in docker/scripts/exec.sh
+
+The application is available at [http://localhost:8089](http://localhost:8089) or [https://localhost:8087](https://localhost:8087)
+The https version use an self-signed certificate
+
 
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
 
 ## Authors
 
