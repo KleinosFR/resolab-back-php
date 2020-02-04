@@ -53,7 +53,8 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(type="boolean")
+     * @Groups({"read_user"})
      */
     private $isActive;
 
@@ -84,25 +85,21 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", cascade={"remove"})
-     * @Groups({"read_user"})
      */
     private $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="user", cascade={"remove"})
-     * @Groups({"read_user"})
      */
     private $alerts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Story", mappedBy="user", cascade={"remove"})
-     * @Groups({"read_user"})
      */
     private $stories;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", cascade={"remove"})
-     * @Groups({"read_user"})
      */
     private $comments;
 
@@ -220,7 +217,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function isActive(): bool
+    public function getIsActive(): bool
     {
         return $this->isActive;
     }
@@ -413,7 +410,7 @@ class User implements UserInterface
     /**
      * @return bool
      */
-    public function isRestricted(): bool
+    public function getisRestricted(): bool
     {
         return $this->isRestricted;
     }

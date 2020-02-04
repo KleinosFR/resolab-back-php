@@ -64,13 +64,19 @@ class Post
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="post", cascade={"remove"})
+     * @Groups({"read_user"})
+     */
+    private $alerts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post", cascade={"remove"})
      * @Groups({"read", "write"})
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="post", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="post", cascade={"remove"})
      * @Groups({"read"})
      * @ApiSubresource
      */
@@ -98,6 +104,8 @@ class Post
         $this->comments = new ArrayCollection();
         $this->createdAt = new DateTime();
         $this->likes = new ArrayCollection();
+        $this->alerts = new ArrayCollection();
+
     }
 
     public function getId(): ?int

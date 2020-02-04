@@ -9,6 +9,8 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * @ApiResource(
@@ -28,6 +30,12 @@ class Story
      * @Groups({"read","write"})
      */
     private $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="story", cascade={"remove"})
+     * @Groups({"read_user"})
+     */
+    private $alerts;
 
     /**
      * @ORM\Column(type="datetime")
@@ -62,6 +70,8 @@ class Story
     {
         $this->date = new DateTime();
         $this->display = true;
+        $this->alerts = new ArrayCollection();
+
     }
 
     public function getId(): ?int

@@ -45,6 +45,12 @@ class Comment
     protected $post;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="comment", cascade={"remove"})
+     * @Groups({"read_user"})
+     */
+    private $alerts;
+
+    /**
      * @ORM\Column(type="datetime")
      * @Groups({"read"})
      */
@@ -73,6 +79,8 @@ class Comment
         $this->createdAt = new DateTime();
         $this->likes = new ArrayCollection();
         $this->display = true;
+        $this->alerts = new ArrayCollection();
+
     }
 
     public function getId(): ?int
