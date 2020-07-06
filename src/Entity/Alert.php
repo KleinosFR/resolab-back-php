@@ -49,19 +49,19 @@ class Alert
     private $moderator;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Post")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="alerts")
      * @Groups({"read"})
      */
     private $post;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Comment")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="alerts")
      * @Groups({"read"})
      */
     private $comment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Story")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Story", inversedBy="alerts")
      * @Groups({"read"})
      */
     private $story;
@@ -143,7 +143,8 @@ class Alert
 
     public function setModerator(User $moderator): self
     {
-        if (in_array('ROLE_MODERATOR', $moderator->getRoles())) {
+        if (in_array('ROLE_MODERATOR', $moderator->getRoles()) 
+            || in_array('ROLE_ADMIN', $moderator->getRoles())) {
             $this->moderator = $moderator;
             $this->takenCare = true;
         }
