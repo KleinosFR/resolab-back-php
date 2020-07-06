@@ -14,10 +14,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read_user"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ApiFilter(SearchFilter::class, properties={
- *     "username": "ipartial"
+ *     "username": "exact"
  * })
  */
 class User implements UserInterface
@@ -28,18 +30,19 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"read", "read_like"})
+     * @Groups({"read_user", "read", "read_like"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"read", "read_like"})
+     * @Groups({"read_user", "read", "read_like"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"read_user"})
      */
     private $roles = [];
 
@@ -56,58 +59,75 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read_user"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read_user"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=6, nullable=true)
      * @Assert\Choice(choices=USER::GENDERS, message="Choose a valid gender.")
+     * @Groups({"read_user"})
      */
     private $gender;
 
     /**
      * @ORM\Column(type="date", nullable=true, nullable=true)
+     * @Groups({"read_user"})
      */
     private $birthday;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", cascade={"remove"})
+     * @Groups({"read_user"})
      */
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Story", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="user", cascade={"remove"})
+     * @Groups({"read_user"})
+     */
+    private $alerts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Story", mappedBy="user", cascade={"remove"})
+     * @Groups({"read_user"})
      */
     private $stories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", cascade={"remove"})
+     * @Groups({"read_user"})
      */
     private $comments;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Time", mappedBy="user")
+     * @Groups({"read_user"})
      */
     private $times;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Likes", mappedBy="user", cascade={"remove"})
+     * @Groups({"read_user"})
      */
     private $likes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ClassRoom", inversedBy="user")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ClassRoom", inversedBy="users")
      * @ORM\JoinColumn(nullable=true)
+     * @Groups({"read_user", "read", "read_like"})
      */
     private $classRoom;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"read_user"})
      */
     private $isRestricted;
 
@@ -117,6 +137,7 @@ class User implements UserInterface
         $this->isRestricted = true;
         $this->username = $username;
         $this->posts = new ArrayCollection();
+        $this->alerts = new ArrayCollection();
         $this->stories = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->times = new ArrayCollection();
@@ -270,6 +291,14 @@ class User implements UserInterface
         $this->classRoom = $classRoom;
 
         return $this;
+    }
+
+    /**
+     * @return PersistentCollection|Post[]
+     */
+    public function getAlerts(): PersistentCollection
+    {
+        return $this->alerts;
     }
 
     /**

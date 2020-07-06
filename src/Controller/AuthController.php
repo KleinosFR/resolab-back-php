@@ -16,6 +16,11 @@ class AuthController extends AbstractController
 
         $username = $request->request->get('_username');
         $password = $request->request->get('_password');
+        if (!$username && !$password) {
+            $datas = json_decode($request->getContent());
+            $username = $datas->_username;
+            $password = $datas->_password;
+        }
 
         $user = new User($username);
         $user->setPassword($encoder->encodePassword($user, $password));

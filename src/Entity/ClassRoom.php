@@ -6,9 +6,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read_user","read"}}
+ * )
  * @ORM\Entity()
  */
 class ClassRoom
@@ -17,19 +20,23 @@ class ClassRoom
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read_user","read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read_user", "read"})
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\School")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read_user", "read"})
      */
     private $school;
+
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="classRoom")
@@ -62,6 +69,7 @@ class ClassRoom
     {
         return $this->school;
     }
+
 
     public function setSchool(?School $school): self
     {
