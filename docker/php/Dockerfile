@@ -1,4 +1,4 @@
-FROM php:7.3.5-fpm-stretch
+FROM php:7.3.19-fpm-stretch
 
 RUN apt-get update && apt-get install -y libmemcached-dev zlib1g-dev tidy csstidy vim gnupg unzip libzip-dev \
     apt-transport-https ca-certificates wget
